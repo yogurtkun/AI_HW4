@@ -9,3 +9,9 @@ b = list_copy(a)
 f(b)
 
 print(a)
+
+for i in a:
+    i[1].difference(set([4]))
+    print(i[1])
+
+print(a)

@@ -107,7 +107,28 @@ def change_order(try_set):
     return list(try_set)
 
 def change_remaining_list(remaining_list,index, new_ele ):
-    pass
+    relate_set = set()
+    
+    new_remaining_list = []
+    
+    for i in range(9):
+        relate_set.add( board[index] )
+        relate_set.add( board[index] )
+
+    tl_tuple = topleft_tuple(index2tuple(index))
+
+    for i in range(tl_tuple[0],tl_tuple[0]+3):
+        for j in range(tl_tuple[1],tl_tuple[1]+3):
+            relate_set.add( board[tuple2index((i,j))] )
+            
+    for item in remaining_list:
+        if item[0] in relate_set:
+            new_remaining_list.append((item[0],item[1].difference(set([new_ele]))))
+        else:
+            new_remaining_list.append(item[0],item[1].copy())
+            
+    return new_remaining_list
+
 
 def solve_board(board, remaining_list):
     try_index,try_set = min(remaining_list,key=lambda x:len(x[1]))
@@ -117,9 +138,8 @@ def solve_board(board, remaining_list):
     for new_ele in try_list:
         new_board = board.copy()
         new_board[try_index] = new_ele
-        new_remaining_list = list_copy(remaining_list)
 
-        change_remaining_list(new_remaining_list,try_index,new_ele)
+        change_remaining_list(remaining_list,try_index,new_ele)
 
         exit()
 
